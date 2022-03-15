@@ -65,8 +65,8 @@ public class MutanteServiceTest {
     		
     		String matriz[] = new String[6];
     		matriz[0] = "AtGCAA";
-    		matriz[1] = "AABAAA";
-    		matriz[2] = "AABAAA";
+    		matriz[1] = "AACAAA";
+    		matriz[2] = "AACAAA";
     		matriz[3] = "AtGCAA";
     		matriz[4] = "AtGCAA";
     		matriz[5] = "AtGCAA";

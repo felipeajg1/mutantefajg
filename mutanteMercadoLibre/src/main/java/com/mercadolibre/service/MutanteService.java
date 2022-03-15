@@ -1,5 +1,8 @@
 package com.mercadolibre.service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -42,13 +45,13 @@ public class MutanteService implements CandidatoInterface {
     	
     	try {
     		
-    		// Se valida si la matriz es nxn
-    		if (mutantInDTO.getDna().length != mutantInDTO.getDna()[0].length()) {
+    		// Se valida que el string tenga el dna correcto
+    		if (!validarListaDna(mutantInDTO.getDna())) {
     			isMutantDTO.setIsMutant(false);
     			isMutantDTO.setHttpCodeMessage(HttpStatus.FORBIDDEN.toString());
-    			return isMutantDTO;
+    			return isMutantDTO;  			
     		}
-    		
+
     		// Primero valida las horizontales, si encuentra dos coincidencias retorna true
     		Long contador = validarHorizontales(mutantInDTO.getDna());
     		
@@ -117,6 +120,29 @@ public class MutanteService implements CandidatoInterface {
 		}
 
 		return consultaTipoCandidatoDTO;
+	}
+	
+    /**
+     * Metodo encargado de validar el string con una expresión regular
+     * 
+     * @author Felipe Andres Jamioy Giron
+     * @param Strind dna
+     * @return Encontro coincidencia
+     */
+	private Boolean validarListaDna(String[] listaDna) {
+		
+		 Pattern pat = Pattern.compile("(A|T|C|G)+");
+		 
+		 for (String dna : listaDna) {
+			
+			 Matcher mat = pat.matcher(dna.toUpperCase());
+			 
+			 if (!mat.matches()) {
+				 return false;
+			 }
+		}
+	    
+		 return true;
 	}
 	
     /**
